@@ -66,6 +66,7 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
+    awesome_print (1.9.2)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
@@ -76,6 +77,8 @@ GEM
       irb (>= 1.5.0)
       reline (>= 0.3.1)
     erubi (1.12.0)
+    fast_jsonapi (1.5)
+      activesupport (>= 4.2)
     globalid (1.1.0)
       activesupport (>= 5.0)
     i18n (1.14.1)
@@ -108,6 +111,7 @@ GEM
     nio4r (2.5.9)
     nokogiri (1.15.4-x86_64-linux)
       racc (~> 1.4)
+    oj (3.16.0)
     puma (5.6.6)
       nio4r (~> 2.0)
     racc (1.7.1)
@@ -159,8 +163,11 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  awesome_print
   bootsnap
   debug
+  fast_jsonapi
+  oj
   puma (~> 5.0)
   rails (~> 7.0.7)
   sqlite3 (~> 1.4)
