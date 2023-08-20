@@ -1,0 +1,147 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/notes":
+    get:
+      summary: Список заметок
+      responses:
+        '200':
+          description: Успешный запрос
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/note/show"
+    post:
+      summary: Создать заметку
+      parameters: []
+      responses:
+        '200':
+          description: Успешный запрос
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/base/success"
+        '422':
+          description: Неправильный запрос
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/base/unprocessable_entity"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/note/new"
+  "/api/v1/notes/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Показать заметку
+      responses:
+        '200':
+          description: Заметка найдена
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/note/show"
+        '404':
+          description: Заметка не найдена
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/base/not_found"
+    patch:
+      summary: Обновить заметку
+      parameters: []
+      responses:
+        '200':
+          description: Успешный запрос
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/base/success"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/note/new"
+    delete:
+      summary: Удалить заметку
+      responses:
+        '200':
+          description: Успешный запрос
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/base/success"
+components:
+  schemas:
+    base:
+      success:
+        type: object
+        properties:
+          status:
+            type: integer
+            enum:
+            - 200
+      unprocessable_entity:
+        type: object
+        properties:
+          body:
+            type: array
+            items:
+              type: string
+          status:
+            type: integer
+            enum:
+            - 422
+      not_found:
+        type: object
+        properties:
+          message:
+            type: string
+          status:
+            type: integer
+            enum:
+            - 404
+    note:
+      show:
+        type: object
+        properties:
+          id:
+            type: integer
+          title:
+            type: string
+          description:
+            type: string
+          created_at:
+            type: string
+        required:
+        - id
+        - title
+        - description
+      new:
+        type: object
+        properties:
+          title:
+            type: string
+          description:
+            type: string
+        required:
+        - title
+        - description
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000

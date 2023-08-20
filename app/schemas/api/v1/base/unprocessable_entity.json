@@ -1,0 +1,8 @@
+{
+  "type": "object",
+
+  "properties": {
+    "body": {"type": "array", "items": { "type": "string" }},
+    "status": { "type": "integer", "enum": [422] }
+  }
+}

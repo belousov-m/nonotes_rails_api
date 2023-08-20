@@ -12,8 +12,11 @@ gem "sqlite3", "~> 1.4"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
 
+gem 'rswag'
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
+gem 'fast_jsonapi'
+gem 'oj'
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
@@ -42,6 +45,8 @@ group :development, :test do
 end
 
 group :development do
+  gem 'awesome_print', require: 'ap'
+  gem 'rspec-rails', '~> 6.0.0'
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 end
