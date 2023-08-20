@@ -7,6 +7,7 @@ RSpec.configure do |config|
   # NOTE: If you're using the rswag-api to serve API descriptions, you'll need
   # to ensure that it's configured to serve Swagger from the same folder
   config.swagger_root = Rails.root.join('swagger').to_s
+  config.swagger_strict_schema_validation = true
 
   # Define one or more Swagger documents and provide global metadata for each one
   # When you run the 'rswag:specs:swaggerize' rake task, the complete Swagger will
@@ -22,12 +23,25 @@ RSpec.configure do |config|
         version: 'v1'
       },
       paths: {},
+      components: {
+        schemas: {
+          base: {
+            success: JSON.parse(File.read('app/schemas/api/v1/base/success.json')),
+            unprocessable_entity: JSON.parse(File.read('app/schemas/api/v1/base/unprocessable_entity.json')),
+            not_found: JSON.parse(File.read('app/schemas/api/v1/base/not_found.json'))
+          },
+          note: {
+            show: JSON.parse(File.read('app/schemas/api/v1/note/show.json')),
+            new: JSON.parse(File.read('app/schemas/api/v1/note/new.json'))
+          }
+        }
+      },
       servers: [
         {
-          url: 'https://{defaultHost}',
+          url: 'http://{defaultHost}',
           variables: {
             defaultHost: {
-              default: 'www.example.com'
+              default: 'localhost:3000'
             }
           }
         }

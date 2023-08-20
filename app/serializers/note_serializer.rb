@@ -1,3 +1,3 @@
 class NoteSerializer < ApplicationSerializer
-  attributes :id, :title, :description
+  attributes :title, :description, :created_at
 end
