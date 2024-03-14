@@ -1,0 +1,15 @@
+version: "3.7"
+services:
+  app:
+    image: nonotes_api
+    environment:
+      POSTGRES_USERNAME: postgres
+      POSTGRES_HOST: db
+    ports:
+      - 3000:3000
+
+  db:
+    image: postgres:alpine3.15
+    restart: always
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust

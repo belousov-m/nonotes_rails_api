@@ -7,11 +7,11 @@
 default: &default
   adapter: postgresql
   encoding: utf-8
-  host: localhost                       # HOST
-  port: 54320                           # Port
-  database: 'nonotes'
-  username: postgres                    # User Name
-  password: password
+  host: <%= ENV.fetch('POSTGRES_HOST', 'localhost') %>
+  port: 5432
+  database: nonotes
+  username: <%= ENV.fetch('POSTGRES_USERNAME', 'maks') %>
+  password: <%= ENV.fetch('POSTGRES_PASSWORD', 3322) %>
   pool: <%= ENV.fetch('RAILS_MAX_THREADS', 5) %>
 
 development:
