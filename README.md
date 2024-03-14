@@ -2,15 +2,15 @@
 
 ## Запуск:
 ```bash
-    git clone git@br.rnds.pro:Belousov/nonotes.git
+git clone git@br.rnds.pro:Belousov/nonotes.git
 ```
 
 ```bash
-    cd nonotes
+cd nonotes
 ```
 
 ```bash
-    docker-compose up
+docker-compose up
 ```
 
 ## Swagger:
