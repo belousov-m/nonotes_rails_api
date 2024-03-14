@@ -1,24 +1,8 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Запуск:
+```git clone https://br.rnds.pro/Belousov/nonotes.git```
+```docker-compose up```
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Swagger:
+[http://localhost:3000/api-docs](http://localhost:3000/api-docs)
