@@ -1,7 +1,9 @@
 # README
 
 ## Запуск:
-```git clone https://br.rnds.pro/Belousov/nonotes.git```
+```git clone git@br.rnds.pro:Belousov/nonotes.git```
+
+```cd nonotes```
 
 ```docker-compose up```
 
