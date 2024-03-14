@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   app:
-    image: nonotes_api
+    build: .
     environment:
       POSTGRES_USERNAME: postgres
       POSTGRES_HOST: db
@@ -13,3 +13,8 @@ services:
     restart: always
     environment:
       POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data: {}

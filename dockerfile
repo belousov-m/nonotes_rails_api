@@ -4,8 +4,8 @@ RUN apk add \
   postgresql-dev \
   tzdata
 WORKDIR /app
-COPY Gemfile* .
+COPY Gemfile* ./
 RUN bundle install
 COPY . .
 EXPOSE 3000
-CMD [ "rails", "server","-p", "3000", "-b", "0.0.0.0" ]
+CMD ["/bin/sh", "-c", "bundle exec docker/start.sh"]
