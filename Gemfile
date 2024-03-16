@@ -11,7 +11,7 @@ gem "rails", "~> 7.0.7"
 gem 'pg'
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
-
+gem 'rack-cors', '~> 0.4.0'
 gem 'rswag'
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
