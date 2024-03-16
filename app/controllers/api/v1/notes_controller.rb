@@ -17,7 +17,7 @@ class Api::V1::NotesController < ApplicationController
     if note.save
       render json: { status: 200 }
     else
-      render json: { body: note.errors.full_messages, status: 422 }, status: 422
+      render json: { errors: note.errors.messages }, status: 422
     end
   end
 
