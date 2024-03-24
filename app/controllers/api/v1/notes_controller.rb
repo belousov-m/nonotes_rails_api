@@ -15,7 +15,7 @@ class Api::V1::NotesController < ApplicationController
     note = Note.new(note_params)
 
     if note.save
-      render json: { status: 200 }
+      render json: NoteSerializer.new(note)
     else
       render json: { errors: note.errors.messages }, status: 422
     end
