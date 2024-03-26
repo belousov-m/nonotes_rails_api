@@ -15,6 +15,7 @@
 #   stage: test
 
 
+image: docker:stable
 
 stages:
   - build
