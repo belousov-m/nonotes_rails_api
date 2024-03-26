@@ -23,7 +23,7 @@ build:
   stage: build
 
   before_script:
-    - docker login -u GitlabDeplDeployTokenoyToken -p ${REGISTRY_ACCESS_TOKEN} registry.gitlab.com
+    - docker login -u DeployToken -p ${REGISTRY_ACCESS_TOKEN} registry.gitlab.com
 
   script:
     - docker build -t ${DOCKER_ENV_CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME} --build-arg branch=${CI_COMMIT_REF_NAME} .
