@@ -19,7 +19,7 @@
 stages:
   - build
 
-build-docker:
+build:
   stage: build
 
   before_script:
