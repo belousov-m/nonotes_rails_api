@@ -1,0 +1,30 @@
+# stages:
+#   - build
+#   - test
+
+# build:
+#   stage: build
+
+#   before_script:
+#     - docker login -u Deployer -p ${ACCESS_TOKEN} registry.gitlab.com
+
+#   script:
+#     - docker-compose build --pull --force-rm && docker-compose push
+
+# test:
+#   stage: test
+
+
+
+stages:
+  - build
+
+build-docker:
+  stage: build
+
+  before_script:
+    - docker login -u GitlabDeployToken -p ${REGISTRY_ACCESS_TOKEN} registry.gitlab.com
+
+  script:
+    - docker build -t ${DOCKER_ENV_CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME} --build-arg branch=${CI_COMMIT_REF_NAME} .
+    - docker push ${DOCKER_ENV_CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}
