@@ -21,7 +21,7 @@ default:
   services:
     - docker:20.10.16-dind
   before_script:
-    - docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin <<<$CI_JOB_TOKEN
+    - docker login -u $CI_REGISTRY_USER -p $REGISTRY_ACCESS_TOKEN $CI_REGISTRY
 
 
 stages:
