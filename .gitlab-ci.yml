@@ -21,7 +21,7 @@ default:
   services:
     - docker:20.10.16-dind
   before_script:
-    - docker login -u $CI_REGISTRY_USER -p $REGISTRY_ACCESS_TOKEN $CI_REGISTRY
+    - docker login -u DeployToken -p yhjBUicEbexQwEKjxGZj $CI_REGISTRY
 
 
 stages:
@@ -30,6 +30,6 @@ stages:
 build:
   stage: build
   script:
-    - docker build -t ${DOCKER_ENV_CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME} --build-arg branch=${CI_COMMIT_REF_NAME} .
-    - docker push ${DOCKER_ENV_CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}
+    - docker build -t $CI_REGISTRY/nonotes/nonotes_api_rails/nonotes_app:latest .
+    - docker push $CI_REGISTRY/nonotes/nonotes_api_rails/nonotes_app:latest
     
