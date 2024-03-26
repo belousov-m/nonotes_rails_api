@@ -2,9 +2,22 @@
   "type": "object",
 
   "properties": {
-    "title": { "type": "string" },
-    "description": { "type": "string" }
-  },
-
-  "required": ["title", "description"]
+    "data": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string" },
+        "attributes": {
+          "type": "object",
+          "properties": {
+            "title": { "type": "string" },
+            "description": { "type": "string" },
+            "created_at": { "type": "string" }
+          },
+          "required": ["title", "description"]
+        }
+      },
+      "required": ["id", "type", "attributes"]
+    }
+  }
 }

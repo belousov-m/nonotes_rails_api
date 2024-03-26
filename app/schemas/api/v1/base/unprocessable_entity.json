@@ -2,7 +2,6 @@
   "type": "object",
 
   "properties": {
-    "body": {"type": "array", "items": { "type": "string" }},
-    "status": { "type": "integer", "enum": [422] }
+    "errors": { "type": "object", "properties": { "description" : { "type": "array" }}}
   }
 }
