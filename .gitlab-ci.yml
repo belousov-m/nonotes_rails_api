@@ -21,7 +21,9 @@ default:
   services:
     - docker:20.10.16-dind
   before_script:
-    - docker login $CI_REGISTRY -u GitlabDeployToken -p $REGISTRY_ACCESS_TOKEN
+    # - docker login $CI_REGISTRY -u GitlabDeployToken -p $REGISTRY_ACCESS_TOKEN
+    - docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin <<<$CI_REGISTRY_PASSWORD
+
 
 stages:
   - build
