@@ -1,14 +1,18 @@
 version: "3.7"
 services:
   app:
+    container_name: nonotes_app
     build: .
     environment:
       POSTGRES_USERNAME: postgres
       POSTGRES_HOST: db
     ports:
       - 3000:3000
+    volumes:
+      - ./:/app
 
   db:
+    container_name: nonotes_db
     image: postgres:alpine3.15
     restart: always
     environment:
