@@ -15,17 +15,17 @@
 #   stage: test
 
 
-image: docker:stable
 
 stages:
   - build
 
 build:
+  image: docker:stable
   stage: build
-
+  services:
+    - docker:20.10.16-dind
   before_script:
     - docker login -u GitlabDeployToken -p ${REGISTRY_ACCESS_TOKEN} ${CI_REGISTRY}
-
   script:
     - docker build -t ${DOCKER_ENV_CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME} --build-arg branch=${CI_COMMIT_REF_NAME} .
     - docker push ${DOCKER_ENV_CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}
