@@ -24,7 +24,7 @@ variables:
   DOCKER_TLS_CERTDIR: ""
 
 default:
-  image: docker:stable
+  image: docker:latest
   services:
     - docker:dind
   before_script:
