@@ -24,9 +24,9 @@ variables:
   DOCKER_TLS_CERTDIR: ""
 
 default:
-  image: docker:stable
+  image: docker:20.10.16
   services:
-    - docker:dind
+    - docker:20.10.16-dind
   before_script:
     - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD $IMAGE_REGISTRY
 
@@ -37,6 +37,8 @@ stages:
 build:
   stage: build
   script:
+    - env
+    - docker info
     - docker pull $TAG_LATEST || true
     - docker build --cache-from $TAG_LATEST -t $TAG_COMMIT -t $TAG_LATEST .
     - docker push $TAG_LATEST
