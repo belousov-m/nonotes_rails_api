@@ -28,7 +28,8 @@ default:
   services:
     - docker:20.10.16-dind
   before_script:
-    - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD $IMAGE_REGISTRY
+    # - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD $IMAGE_REGISTRY
+    - echo DOCKERHUB_PASSWORD  | docker login -u $DOCKERHUB_USERNAME $IMAGE_REGISTRY --password-stdin
 
 
 stages:
