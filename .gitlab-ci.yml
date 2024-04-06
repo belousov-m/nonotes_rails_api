@@ -1,21 +1,3 @@
-# stages:
-#   - build
-#   - test
-
-# build:
-#   stage: build
-
-#   before_script:
-#     - docker login -u Deployer -p ${ACCESS_TOKEN} registry.gitlab.com
-
-#   script:
-#     - docker-compose build --pull --force-rm && docker-compose push
-
-# test:
-#   stage: test
-# - docker login -u GitlabDeployToken -p ${REGISTRY_ACCESS_TOKEN} ${CI_REGISTRY}
-
-
 variables:
   IMAGE_REGISTRY: docker.io
   IMAGE_NAME: teasaita/nonotes_app
@@ -32,6 +14,7 @@ default:
 
 stages:
   - build
+  - test
 
 build:
   stage: build
@@ -40,3 +23,17 @@ build:
     - docker build --cache-from $TAG_LATEST -t $TAG_COMMIT -t $TAG_LATEST .
     - docker push $TAG_LATEST
     - docker push $TAG_COMMIT
+
+# rubocop:bundle_audit:
+#   stage: test
+#   image: 
+#   script: |
+#     gem install bundler-audit
+#     bundle-audit update
+#     bundle-audit check
+
+tests:units:
+  stage: test
+  script: |
+    docker pull $IMAGE_NAME:latest
+    docker-compose exec app rspec spec
