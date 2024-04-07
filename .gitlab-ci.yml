@@ -20,7 +20,7 @@ build:
   stage: build
   script:
     - docker pull $TAG_LATEST || true
-    - docker build --cache-from $TAG_LATEST -t $TAG_COMMIT -t $TAG_LATEST .
+    - docker build --force-rm --cache-from $TAG_LATEST -t $TAG_COMMIT -t $TAG_LATEST .
     - docker push $TAG_LATEST
     - docker push $TAG_COMMIT
 
@@ -37,7 +37,8 @@ tests:units:
   script:
     - docker pull $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
     - docker-compose up -d
-    - sleep 3
-    - docker-compose exec app rspec spec
+    - sleep 20
+    - docker ps
+    - docker-compose exec app bundle exec rspec spec
   after_script:
     - docker-compose down -v --remove-orphans || true
