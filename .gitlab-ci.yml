@@ -34,9 +34,9 @@ build:
 
 tests:units:
   stage: test
-  script: |
-    docker pull $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
-    docker-compose up -d
-    docker-compose exec app rspec spec
+  script:
+    - docker pull $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+    - docker-compose up -d
+    - docker-compose exec app rspec spec
   after_script:
-    docker-compose down -v --remove-orphans || true
+    - docker-compose down -v --remove-orphans || true
