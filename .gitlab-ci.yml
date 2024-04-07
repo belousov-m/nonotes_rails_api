@@ -16,13 +16,21 @@ stages:
   - build
   - test
 
-build:
+build:commit:
   stage: build
   script:
     - docker pull $TAG_LATEST || true
-    - docker build --force-rm --cache-from $TAG_LATEST -t $TAG_COMMIT -t $TAG_LATEST .
-    - docker push $TAG_LATEST
+    - docker build --force-rm --cache-from $TAG_LATEST -t $TAG_COMMIT .
     - docker push $TAG_COMMIT
+
+build:latest:
+  stage: build
+  script:
+    - docker pull $TAG_LATEST || true
+    - docker build --force-rm --cache-from $TAG_LATEST -t $TAG_LATEST .
+    - docker push $TAG_LATEST
+  rules:
+    - if: $CI_COMMIT_BRANCH == 'master'
 
 # rubocop:bundle_audit:
 #   stage: test
@@ -35,7 +43,7 @@ build:
 tests:units:
   stage: test
   script:
-    - docker pull $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+    - docker pull $TAG_COMMIT
     - docker images
     - docker-compose up -d
     - sleep 20
