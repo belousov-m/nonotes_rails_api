@@ -15,6 +15,7 @@ default:
 stages:
   - build
   - test
+  - deploy
 
 build:commit:
   stage: build
@@ -61,3 +62,7 @@ tests:units:
     # - docker images | grep nonotes
     - docker-compose down -v --remove-orphans || true
     # - docker rmi -f $(docker images -q --filter "reference='nonotes-app'")
+
+deploy:prod:
+  rules:
+    - if: $CI_COMMIT_BRANCH == 'master'
