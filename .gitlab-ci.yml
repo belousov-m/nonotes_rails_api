@@ -37,19 +37,22 @@ build:latest:
   after_script:
     - docker rmi $IMAGE_NAME:latest
 
-# rubocop:bundle_audit:
-#   stage: test
-#   image: 
-#   script: |
-#     gem install bundler-audit
-#     bundle-audit update
-#     bundle-audit check
+tests:bundle-audit:
+  stage: test
+  variables:
+    COMPOSE_FILE: envs/tests/docker-compose.yml
+  before_script:
+  - export IMAGE_NAME="$IMAGE_NAME:$CI_COMMIT_SHORT_SHA"
+  script:
+    - docker pull $TAG_COMMIT
+    - docker-compose up -d
+    - docker-compose exec app bundle-audit check
+  after_script:
+    - docker-compose down -v --remove-orphans || true
 
 tests:units:
   stage: test
   variables:
-    # IMAGE_NAME: $IMAGE_NAME
-    # CI_COMMIT_SHORT_SHA: $CI_COMMIT_SHORT_SHA
     COMPOSE_FILE: envs/tests/docker-compose.yml
   before_script:
   - export IMAGE_NAME="$IMAGE_NAME:$CI_COMMIT_SHORT_SHA"
@@ -58,9 +61,7 @@ tests:units:
     - docker-compose up -d
     - docker-compose exec app bundle exec rspec spec
   after_script:
-    # - docker images | grep nonotes
     - docker-compose down -v --remove-orphans || true
-    # - docker rmi -f $(docker images -q --filter "reference='nonotes-app'")
 
 deploy:prod:
   stage: deploy
