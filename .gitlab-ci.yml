@@ -23,7 +23,12 @@ build:commit:
     - docker build --force-rm --cache-from $TAG_LATEST -t $TAG_COMMIT .
     - docker push $TAG_COMMIT
   after_script:
-    - docker images
+    - docker rmi $IMAGE_NAME:eeae4481
+    - docker rmi $IMAGE_NAME:cf49823c
+    - docker rmi $IMAGE_NAME:212aff67
+    - docker rmi $IMAGE_NAME:9714e804
+    - docker rmi $IMAGE_NAME:fef48c81
+    - docker rmi nonotes-app:latest
     - docker rmi $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
     - docker images
 
