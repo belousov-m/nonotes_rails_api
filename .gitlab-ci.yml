@@ -19,10 +19,10 @@ stages:
 build:commit:
   stage: build
   script:
-    - docker build --force-rm --pull -t $TAG_COMMIT .
+    - docker build --force-rm -t $TAG_COMMIT .
     - docker push $TAG_COMMIT
   after_script:
-    # - docker rmi nonotes-app:latest
+    - docker rmi nonotes-app:latest
     # - docker rmi $IMAGE_NAME:fc4d0e24
     - docker rmi $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
     - docker images
@@ -30,7 +30,7 @@ build:commit:
 build:latest:
   stage: build
   script:
-    - docker build --force-rm --pull -t $TAG_LATEST .
+    - docker build --force-rm -t $TAG_LATEST .
     - docker push $TAG_LATEST
   rules:
     - if: $CI_COMMIT_BRANCH == 'master'
