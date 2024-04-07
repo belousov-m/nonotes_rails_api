@@ -55,11 +55,8 @@ tests:units:
   - export IMAGE_NAME="$IMAGE_NAME:$CI_COMMIT_SHORT_SHA"
   script:
     - docker pull $TAG_COMMIT
-    - docker images
     - docker-compose up -d
-    - sleep 20
-    - docker ps --all
-    - docker-compose exec -T app bundle exec rspec spec
+    - docker-compose exec app bundle exec rspec spec
   after_script:
     # - docker images | grep nonotes
     - docker-compose down -v --remove-orphans || true
