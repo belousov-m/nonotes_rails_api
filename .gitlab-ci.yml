@@ -36,9 +36,10 @@ tests:units:
   stage: test
   script:
     - docker pull $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+    - docker images
     - docker-compose up -d
     - sleep 20
     - docker ps
-    - docker-compose exec app bundle exec rspec spec
+    - docker-compose exec -T app bundle exec rspec spec
   after_script:
     - docker-compose down -v --remove-orphans || true
