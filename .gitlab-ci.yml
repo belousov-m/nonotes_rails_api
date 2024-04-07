@@ -47,6 +47,8 @@ build:latest:
 tests:units:
   stage: test
   variables:
+    IMAGE_NAME: $IMAGE_NAME
+    CI_COMMIT_SHORT_SHA: $CI_COMMIT_SHORT_SHA
     COMPOSE_FILE: envs/tests/docker-compose.yml
   script:
     - docker pull $TAG_COMMIT
