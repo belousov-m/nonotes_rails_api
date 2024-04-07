@@ -24,7 +24,8 @@ build:commit:
   after_script:
     # - docker rmi nonotes-app:latest
     # - docker rmi $IMAGE_NAME:fc4d0e24
-    - docker rmi -f $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+    - docker rmi -f $(docker images -q --filter "reference=$IMAGE_NAME")
+    # - docker rmi -f $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
     - docker images | grep nonotes
 
 build:latest:
