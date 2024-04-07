@@ -46,6 +46,8 @@ build:latest:
 
 tests:units:
   stage: test
+  variables:
+    COMPOSE_FILE: envs/tests/docker-compose.yml
   script:
     - docker pull $TAG_COMMIT
     # - docker images
