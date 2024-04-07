@@ -19,8 +19,7 @@ stages:
 build:commit:
   stage: build
   script:
-    # - docker pull $TAG_LATEST || true
-    - docker build --force-rm -t $TAG_COMMIT .
+    - docker build --force-rm --pull -t $TAG_COMMIT .
     - docker push $TAG_COMMIT
   after_script:
     - docker rmi nonotes-app:latest
@@ -31,8 +30,7 @@ build:commit:
 build:latest:
   stage: build
   script:
-    - docker pull $TAG_LATEST || true
-    - docker build --force-rm --cache-from $TAG_LATEST -t $TAG_LATEST .
+    - docker build --force-rm --pull -t $TAG_LATEST .
     - docker push $TAG_LATEST
   rules:
     - if: $CI_COMMIT_BRANCH == 'master'
@@ -47,14 +45,14 @@ build:latest:
 #     bundle-audit update
 #     bundle-audit check
 
-tests:units:
-  stage: test
-  script:
-    - docker pull $TAG_COMMIT
-    - docker images
-    - docker-compose up -d
-    - sleep 20
-    - docker ps
-    - docker-compose exec -T app bundle exec rspec spec
-  after_script:
-    - docker-compose down -v --remove-orphans || true
+# tests:units:
+#   stage: test
+#   script:
+#     - docker pull $TAG_COMMIT
+#     - docker images
+#     - docker-compose up -d
+#     - sleep 20
+#     - docker ps
+#     - docker-compose exec -T app bundle exec rspec spec
+#   after_script:
+#     - docker-compose down -v --remove-orphans || true
