@@ -22,6 +22,7 @@ build:commit:
     - docker build --force-rm -t $TAG_COMMIT .
     - docker push $TAG_COMMIT
   after_script:
+    - docker images | grep nonotes
     # - docker rmi nonotes-app:latest
     # - docker rmi $IMAGE_NAME:fc4d0e24
     - docker rmi -f $(docker images -q --filter "reference=$IMAGE_NAME")
