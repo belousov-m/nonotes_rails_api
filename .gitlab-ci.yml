@@ -22,10 +22,10 @@ build:commit:
     - docker build --force-rm -t $TAG_COMMIT .
     - docker push $TAG_COMMIT
   after_script:
-    - docker rmi nonotes-app:latest
+    # - docker rmi nonotes-app:latest
     # - docker rmi $IMAGE_NAME:fc4d0e24
     - docker rmi $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
-    - docker images
+    # - docker images
 
 build:latest:
   stage: build
@@ -45,14 +45,14 @@ build:latest:
 #     bundle-audit update
 #     bundle-audit check
 
-# tests:units:
-#   stage: test
-#   script:
-#     - docker pull $TAG_COMMIT
-#     - docker images
-#     - docker-compose up -d
-#     - sleep 20
-#     - docker ps
-#     - docker-compose exec -T app bundle exec rspec spec
-#   after_script:
-#     - docker-compose down -v --remove-orphans || true
+tests:units:
+  stage: test
+  script:
+    - docker images
+    - docker pull $TAG_COMMIT
+    - docker-compose up -d
+    - sleep 20
+    - docker ps
+    - docker-compose exec -T app bundle exec rspec spec
+  after_script:
+    - docker-compose down -v --remove-orphans || true
