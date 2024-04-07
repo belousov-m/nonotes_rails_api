@@ -64,5 +64,8 @@ tests:units:
     # - docker rmi -f $(docker images -q --filter "reference='nonotes-app'")
 
 deploy:prod:
+  stage: deploy
+  script:
+    - echo "deploy"
   rules:
     - if: $CI_COMMIT_BRANCH == 'master'
