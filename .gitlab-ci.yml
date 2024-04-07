@@ -37,6 +37,7 @@ tests:units:
   script:
     - docker pull $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
     - docker-compose up -d
+    -sleep 3
     - docker-compose exec app rspec spec
   after_script:
     - docker-compose down -v --remove-orphans || true
