@@ -22,10 +22,9 @@ build:commit:
     - docker build --force-rm -t $TAG_COMMIT .
     - docker push $TAG_COMMIT
   after_script:
-    - docker images | grep nonotes
-    - docker rmi -f $(docker images -q --filter "reference='nonotes-app'")
+    # - docker images | grep nonotes
+    # - docker rmi -f $(docker images -q --filter "reference='nonotes-app'")
     # - docker rmi -f $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
-    - docker images | grep nonotes
 
 build:latest:
   stage: build
@@ -55,7 +54,6 @@ tests:units:
     - docker ps --all
     - docker-compose exec -T app bundle exec rspec spec
   after_script:
-    - docker images | grep nonotes
+    # - docker images | grep nonotes
     - docker-compose down -v --remove-orphans || true
-    - docker rmi -f $(docker images -q --filter "reference='nonotes-app'")
-    - docker images | grep nonotes
+    # - docker rmi -f $(docker images -q --filter "reference='nonotes-app'")
