@@ -8,21 +8,34 @@ variables:
 default:
   image: docker:latest
   services:
-    - docker:dind
+    - docker:latest
   before_script:
     - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD $IMAGE_REGISTRY
 
 stages:
   - build
   - test
+  - deploy
 
-build:
+build:commit:
   stage: build
   script:
-    - docker pull $TAG_LATEST || true
-    - docker build --cache-from $TAG_LATEST -t $TAG_COMMIT -t $TAG_LATEST .
-    - docker push $TAG_LATEST
+    - docker build --force-rm -t $TAG_COMMIT .
     - docker push $TAG_COMMIT
+  after_script:
+    # - docker images | grep nonotes
+    # - docker rmi -f $(docker images -q --filter "reference='nonotes-app'")
+    # - docker rmi -f $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+
+build:latest:
+  stage: build
+  script:
+    - docker build --force-rm -t $TAG_LATEST .
+    - docker push $TAG_LATEST
+  rules:
+    - if: $CI_COMMIT_BRANCH == 'master'
+  after_script:
+    - docker rmi $IMAGE_NAME:latest
 
 # rubocop:bundle_audit:
 #   stage: test
@@ -34,9 +47,24 @@ build:
 
 tests:units:
   stage: test
-  script: |
-    docker pull $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
-    docker-compose up -d
-    docker-compose exec app rspec spec
+  variables:
+    # IMAGE_NAME: $IMAGE_NAME
+    # CI_COMMIT_SHORT_SHA: $CI_COMMIT_SHORT_SHA
+    COMPOSE_FILE: envs/tests/docker-compose.yml
+  before_script:
+  - export IMAGE_NAME="$IMAGE_NAME:$CI_COMMIT_SHORT_SHA"
+  script:
+    - docker pull $TAG_COMMIT
+    - docker-compose up -d
+    - docker-compose exec app bundle exec rspec spec
   after_script:
-    docker-compose down -v --remove-orphans || true
+    # - docker images | grep nonotes
+    - docker-compose down -v --remove-orphans || true
+    # - docker rmi -f $(docker images -q --filter "reference='nonotes-app'")
+
+deploy:prod:
+  stage: deploy
+  script:
+    - echo "deploy"
+  rules:
+    - if: $CI_COMMIT_BRANCH == 'master'
