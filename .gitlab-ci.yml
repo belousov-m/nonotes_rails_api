@@ -23,9 +23,7 @@ build:commit:
     - docker push $TAG_COMMIT
   after_script:
     - docker images | grep nonotes
-    # - docker rmi nonotes-app:latest
-    # - docker rmi $IMAGE_NAME:fc4d0e24
-    - docker rmi -f $(docker images -q --filter "reference=$IMAGE_NAME")
+    - docker rmi -f $(docker images -q --filter "reference='nonotes-app'")
     # - docker rmi -f $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
     - docker images | grep nonotes
 
@@ -59,5 +57,5 @@ tests:units:
   after_script:
     - docker images | grep nonotes
     - docker-compose down -v --remove-orphans || true
-    - docker rmi -f $(docker images -q --filter "reference=$IMAGE_NAME")
+    - docker rmi -f $(docker images -q --filter "reference='nonotes-app'")
     - docker images | grep nonotes
