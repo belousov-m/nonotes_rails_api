@@ -51,6 +51,8 @@ tests:units:
     IMAGE_NAME: $IMAGE_NAME
     CI_COMMIT_SHORT_SHA: $CI_COMMIT_SHORT_SHA
     COMPOSE_FILE: envs/tests/docker-compose.yml
+  before_script:
+  # - export IMAGE_NAME="$IMAGE_NAME:$CI_COMMIT_SHORT_SHA"
   script:
     - docker pull $TAG_COMMIT
     # - docker images
