@@ -51,11 +51,13 @@ tests:units:
   stage: test
   script:
     - docker pull $TAG_COMMIT
-    - docker images
+    # - docker images
     - docker-compose up -d
     - sleep 20
     - docker ps --all
     - docker-compose exec -T app bundle exec rspec spec
   after_script:
+    - docker images | grep nonotes
     - docker-compose down -v --remove-orphans || true
-    - docker images
+    - docker rmi -f $(docker images -q --filter "reference=$IMAGE_NAME")
+    - docker images | grep nonotes
