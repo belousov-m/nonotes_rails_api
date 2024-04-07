@@ -16,27 +16,27 @@ RSpec.describe 'api/v1/notes', type: :request do
       end
     end
 
-    # post('Создать заметку') do
-    #   consumes 'application/json'
-    #   produces 'application/json'
-    #   parameter name: :note, in: :body, schema: {
-    #     '$ref' => '#/components/schemas/note/new'
-    #   }
+    post('Создать заметку') do
+      consumes 'application/json'
+      produces 'application/json'
+      parameter name: :note, in: :body, schema: {
+        '$ref' => '#/components/schemas/note/new'
+      }
 
-    #   response(200, 'Успешный запрос') do
-    #     schema '$ref' => '#/components/schemas/base/success'
+      response(200, 'Успешный запрос') do
+        schema '$ref' => '#/components/schemas/base/success'
 
-    #     let(:note) { { title: 'foo', description: 'bar' } }
-    #     run_test!
-    #   end
+        let(:note) { { title: 'foo', description: 'bar' } }
+        run_test!
+      end
 
-    #   response(422, 'Неправильный запрос') do
-    #     schema '$ref' => '#/components/schemas/base/unprocessable_entity'
+      response(422, 'Неправильный запрос') do
+        schema '$ref' => '#/components/schemas/base/unprocessable_entity'
 
-    #     let(:note) { { title: 'foo' } }
-    #     run_test!
-    #   end
-    # end
+        let(:note) { { title: 'foo' } }
+        run_test!
+      end
+    end
   end
 
   path '/api/v1/notes/{id}' do

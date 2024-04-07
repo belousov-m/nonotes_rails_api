@@ -4,6 +4,7 @@ services:
     container_name: nonotes_app
     image: ${IMAGE_NAME}
     environment:
+      RAILS_ENV: test
       POSTGRES_USERNAME: postgres
       POSTGRES_HOST: db
   db:
