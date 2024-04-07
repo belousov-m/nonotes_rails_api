@@ -24,8 +24,8 @@ build:commit:
   after_script:
     # - docker rmi nonotes-app:latest
     # - docker rmi $IMAGE_NAME:fc4d0e24
-    - docker rmi $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
-    - docker images
+    - docker rmi -f $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+    - docker images | grep nonotes
 
 build:latest:
   stage: build
@@ -48,19 +48,12 @@ build:latest:
 tests:units:
   stage: test
   script:
-    - docker images
     - docker pull $TAG_COMMIT
+    - docker images
     - docker-compose up -d
     - sleep 20
-    - docker ps
+    - docker ps --all
     - docker-compose exec -T app bundle exec rspec spec
   after_script:
-    - docker rmi $IMAGE_NAME:79a1aad1
-    - docker rmi $IMAGE_NAME:90c2ad6b
-    - docker rmi $IMAGE_NAME:9c35da78
-    - docker rmi $IMAGE_NAME:da519278
-    - docker rmi $IMAGE_NAME:cf49823c
-    - docker rmi $IMAGE_NAME:9714e804
-    - docker rmi $IMAGE_NAME:latest
     - docker-compose down -v --remove-orphans || true
     - docker images
