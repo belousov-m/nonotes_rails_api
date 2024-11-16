@@ -24,7 +24,7 @@ RSpec.describe 'api/v1/notes', type: :request do
       }
 
       response(200, 'Успешный запрос') do
-        schema '$ref' => '#/components/schemas/base/success'
+        schema '$ref' => '#/components/schemas/note/new'
 
         let(:note) { { title: 'foo', description: 'bar' } }
         run_test!

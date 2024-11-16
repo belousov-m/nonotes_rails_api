@@ -1,0 +1,15 @@
+version: "3.7"
+services:
+  app:
+    container_name: nonotes_app
+    image: ${IMAGE_NAME}
+    environment:
+      RAILS_ENV: test
+      POSTGRES_USERNAME: postgres
+      POSTGRES_HOST: db
+  db:
+    container_name: nonotes_db
+    image: postgres:alpine3.15
+    restart: always
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
